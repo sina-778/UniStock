@@ -10,6 +10,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _fromKey = GlobalKey();
+  TextEditingController user = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -18,15 +19,19 @@ class _LoginScreenState extends State<LoginScreen> {
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(100),
           child: AppBar(
+            backgroundColor: Colors.amberAccent,
             centerTitle: true,
             automaticallyImplyLeading: false,
-            title: Center(
-              child: Text(
-                ' Welcome',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 30,
-                  fontWeight: FontWeight.w700,
+            title: Padding(
+              padding: const EdgeInsets.only(top: 35),
+              child: Center(
+                child: Text(
+                  ' UniStock',
+                  style: TextStyle(
+                    color: Colors.black54,
+                    fontSize: 30,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
             ),
@@ -37,10 +42,10 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  padding: const EdgeInsets.only(left: 10, top: 80, right: 10),
                   child: Container(
                     width: 400,
-                    height: 300,
+                    height: 380,
                     decoration: BoxDecoration(
                       color: Colors.blueGrey,
                       borderRadius: BorderRadius.circular(20.0),
@@ -53,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             padding: const EdgeInsets.only(
                                 top: 30, left: 10, right: 10),
                             child: TextFormField(
-                              // controller: nameController,
+                              controller: user,
                               decoration: InputDecoration(
                                 hintText: 'User name',
                                 hintStyle:
@@ -88,6 +93,24 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(
                             height: 20,
                           ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 30, left: 10, right: 10),
+                            child: TextFormField(
+                              //controller: store,
+                              decoration: InputDecoration(
+                                hintText: 'Store ID',
+                                hintStyle:
+                                    TextStyle(color: Colors.grey, fontSize: 20),
+                                prefixIcon: Icon(
+                                  Icons.person,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 40,
+                          ),
                           SizedBox(
                             height: 44,
                             width: 194,
@@ -96,13 +119,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => HomeScreen()));
+                                        builder: (context) => HomeScreen(
+                                              user: user.text,
+                                            )));
                               },
                               style: ElevatedButton.styleFrom(
-                                  primary: Colors.blueAccent),
+                                  primary: Colors.amberAccent),
                               child: Text(
-                                'Login',
-                                style: TextStyle(color: Colors.white),
+                                'LogIn',
+                                style: TextStyle(
+                                    color: Colors.black54, fontSize: 20),
                               ),
                             ),
                           )
