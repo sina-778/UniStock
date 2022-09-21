@@ -9,7 +9,10 @@ import 'Model/ItemInfo.dart';
 
 class HomeScreen extends StatefulWidget {
   String user;
-  HomeScreen({Key? key, required this.user}) : super(key: key);
+  String store;
+
+  HomeScreen({Key? key, required this.user, required this.store})
+      : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
@@ -17,7 +20,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String _scanBarcode = '010340';
+  String _scanBarcode = 'sina';
   String? scannedResult;
   int qty = 1;
   TextEditingController qtyCon = TextEditingController();
@@ -230,8 +233,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             });
                           },
                           child: Container(
-                            height: 180,
-                            width: 180,
+                            height: 120,
+                            width: 120,
                             decoration: BoxDecoration(
                               border: Border.all(
                                   width: 5, color: Colors.yellowAccent),
@@ -241,6 +244,138 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                         ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        GestureDetector(
+                          onTap: () async {
+                            await scanBarcodeNormal();
+                            await postScannedResult();
+                            Future.delayed(Duration(milliseconds: 20), () {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    if (isLoading == true) {
+                                      return CircularProgressIndicator();
+                                    } else {
+                                      return AlertDialog(
+                                        title: Text('Scan result',
+                                            style: TextStyle(fontSize: 20)),
+                                        content: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text('Item Code:   ${data!.xitem}'),
+                                            Text("Item Name:  ${data!.xdesc} "),
+                                            Text(
+                                                "Supplier Name:  ${data!.xcusname} "),
+                                            Row(
+                                              children: [
+                                                Text("Quantity : "),
+                                                SizedBox(
+                                                  height: 60,
+                                                  width: 50,
+                                                  child: TextField(
+                                                    controller: qtyCon,
+                                                    autofocus: true,
+                                                    textAlign: TextAlign.center,
+                                                    keyboardType:
+                                                        TextInputType.number,
+                                                    maxLength: 1,
+                                                    cursorColor:
+                                                        Theme.of(context)
+                                                            .primaryColorDark,
+                                                    decoration:
+                                                        const InputDecoration(
+                                                            // border:
+                                                            //     OutlineInputBorder(),
+                                                            counterText: ' ',
+                                                            hintText: "1",
+                                                            hintStyle: TextStyle(
+                                                                color: Colors
+                                                                    .black,
+                                                                fontSize: 20)),
+                                                    onChanged: (value) {
+                                                      //focus scope next and previous use for control the controller movement.
+                                                      if (value.length == 1) {
+                                                        FocusScope.of(context)
+                                                            .nextFocus();
+                                                      } else if (value
+                                                          .isEmpty) {
+                                                        FocusScope.of(context)
+                                                            .previousFocus();
+                                                      }
+                                                    },
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        actions: [
+                                          FlatButton(
+                                            color: Color(0xFF8CA6DB),
+                                            onPressed: () async {
+                                              // print("_scanBarcode");
+                                              // print(_scanBarcode);
+
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(SnackBar(
+                                                content: Text(
+                                                  "Order Confirmed",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    //fontWeight: FontWeight.bold,
+                                                    fontSize: 18,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ));
+
+                                              if (qtyCon.text.isEmpty) {
+                                                await postQuantity(
+                                                    1.toString());
+                                                await postScannedResult();
+                                              } else {
+                                                //post to api
+                                                postQuantity(qtyCon.text);
+                                                qtyCon.clear();
+                                              }
+                                              // var snackBar = SnackBar(
+                                              //     content: Text('Hello World'));
+                                              // ScaffoldMessenger.of(context)
+                                              //     .showSnackBar(snackBar);
+                                              //scanBarcodeNormal();
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text("ADD"),
+                                          ),
+                                        ],
+                                        scrollable: true,
+                                      );
+                                    }
+                                  });
+                            });
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                height: 130,
+                                width: 130,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      width: 5, color: Colors.yellowAccent),
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                          'image/barcode-icon-21.jpg')),
+                                ),
+                              ),
+                              Text("data"),
+                            ],
+                          ),
+                        ),
+
                         // Container(
                         //   child: Column(
                         //     crossAxisAlignment: CrossAxisAlignment.start,

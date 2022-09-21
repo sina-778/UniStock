@@ -1,3 +1,5 @@
+import 'package:uni_stock/scan_and_add.dart';
+
 import 'home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +13,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _fromKey = GlobalKey();
   TextEditingController user = TextEditingController();
+  TextEditingController store = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -97,13 +100,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             padding: const EdgeInsets.only(
                                 top: 30, left: 10, right: 10),
                             child: TextFormField(
-                              //controller: store,
+                              controller: store,
                               decoration: InputDecoration(
                                 hintText: 'Store ID',
                                 hintStyle:
                                     TextStyle(color: Colors.grey, fontSize: 20),
                                 prefixIcon: Icon(
-                                  Icons.person,
+                                  Icons.store_outlined,
                                 ),
                               ),
                             ),
@@ -121,6 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     MaterialPageRoute(
                                         builder: (context) => HomeScreen(
                                               user: user.text,
+                                              store: store.text,
                                             )));
                               },
                               style: ElevatedButton.styleFrom(
