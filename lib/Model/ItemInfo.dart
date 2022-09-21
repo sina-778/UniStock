@@ -10,6 +10,7 @@ String itemInfoToJson(ItemInfo data) => json.encode(data.toJson());
 
 class ItemInfo {
   ItemInfo({
+    required this.qty,
     required this.xitem,
     required this.xdesc,
     required this.xcus,
@@ -18,6 +19,7 @@ class ItemInfo {
     required this.xoldcode,
   });
 
+  int qty;
   String xitem;
   String xdesc;
   String xcus;
@@ -26,6 +28,7 @@ class ItemInfo {
   String xoldcode;
 
   factory ItemInfo.fromJson(Map<String, dynamic> json) => ItemInfo(
+        qty: json["qty"],
         xitem: json["xitem"],
         xdesc: json["xdesc"],
         xcus: json["xcus"],
@@ -35,6 +38,7 @@ class ItemInfo {
       );
 
   Map<String, dynamic> toJson() => {
+        "qty": qty,
         "xitem": xitem,
         "xdesc": xdesc,
         "xcus": xcus,

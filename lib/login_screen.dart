@@ -1,5 +1,4 @@
 import 'package:google_fonts/google_fonts.dart';
-import 'package:uni_stock/scan_and_add.dart';
 
 import 'home_screen.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +13,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _fromKey = GlobalKey();
   TextEditingController user = TextEditingController();
+  TextEditingController pass = TextEditingController();
   TextEditingController store = TextEditingController();
 
   @override
