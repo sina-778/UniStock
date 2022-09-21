@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 
 import 'Model/ItemInfo.dart';
+import 'login_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   String user;
@@ -87,356 +89,340 @@ class _HomeScreenState extends State<HomeScreen> {
     print(response.body);
   }
 
+  bool isPosted = false;
+  Future<void> autoScan() async {
+    setState(() {
+      isPosted = true;
+    });
+    var response = await http.post(
+        Uri.parse("http://172.20.20.69/sina/unistock/scan_only.php"),
+        body: jsonEncode(<String, dynamic>{
+          "item": _scanBarcode,
+          "xwh": widget.store,
+          "prep_id": widget.user
+        }));
+    print(response.body);
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      duration: Duration(seconds: 1),
+      content: Text(
+        "Order Added successfully",
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          //fontWeight: FontWeight.bold,
+          fontSize: 18,
+          color: Colors.white,
+        ),
+      ),
+    ));
+
+    setState(() {
+      isPosted = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: Scaffold(
-            backgroundColor: Colors.white70,
-            appBar: AppBar(
-              backgroundColor: Colors.amberAccent,
-              centerTitle: true,
-              automaticallyImplyLeading: false,
-              title: Padding(
-                padding: const EdgeInsets.only(top: 5),
-                child: Center(
-                  child: Text(
-                    'UniStock',
-                    style: TextStyle(
-                      color: Colors.black54,
-                      fontSize: 30,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
+    return Scaffold(
+        backgroundColor: Colors.white70,
+        appBar: AppBar(
+          backgroundColor: Colors.amberAccent,
+          centerTitle: true,
+          automaticallyImplyLeading: false,
+          title: Padding(
+            padding: const EdgeInsets.only(top: 5),
+            child: Center(
+              child: Text(
+                'UniStock',
+                style: TextStyle(
+                  color: Colors.black54,
+                  fontSize: 30,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
             ),
-            body: Builder(builder: (BuildContext context) {
-              return Container(
-                  alignment: Alignment.center,
-                  child: Flex(
-                      direction: Axis.vertical,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        // ElevatedButton(
-                        //     onPressed: () => scanBarcodeNormal()
-                        //   ,
-                        //     child: Text('Start barcode scan'),
-                        // ),
-                        GestureDetector(
-                          onTap: () async {
-                            await scanBarcodeNormal();
-                            await postScannedResult();
-                            Future.delayed(Duration(milliseconds: 20), () {
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    if (isLoading == true) {
-                                      return CircularProgressIndicator();
-                                    } else {
-                                      return AlertDialog(
-                                        title: Text('Scan result',
-                                            style: TextStyle(fontSize: 20)),
-                                        content: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text('Item Code:   ${data!.xitem}'),
-                                            Text("Item Name:  ${data!.xdesc} "),
-                                            Text(
-                                                "Supplier Name:  ${data!.xcusname} "),
-                                            Row(
-                                              children: [
-                                                Text("Quantity : "),
-                                                SizedBox(
-                                                  height: 60,
-                                                  width: 50,
-                                                  child: TextField(
-                                                    controller: qtyCon,
-                                                    autofocus: true,
-                                                    textAlign: TextAlign.center,
-                                                    keyboardType:
-                                                        TextInputType.number,
-                                                    maxLength: 1,
-                                                    cursorColor:
-                                                        Theme.of(context)
-                                                            .primaryColorDark,
-                                                    decoration:
-                                                        const InputDecoration(
-                                                            // border:
-                                                            //     OutlineInputBorder(),
-                                                            counterText: ' ',
-                                                            hintText: "1",
-                                                            hintStyle: TextStyle(
-                                                                color: Colors
-                                                                    .black,
-                                                                fontSize: 20)),
-                                                    onChanged: (value) {
-                                                      //focus scope next and previous use for control the controller movement.
-                                                      if (value.length == 1) {
-                                                        FocusScope.of(context)
-                                                            .nextFocus();
-                                                      } else if (value
-                                                          .isEmpty) {
-                                                        FocusScope.of(context)
-                                                            .previousFocus();
-                                                      }
-                                                    },
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        actions: [
-                                          FlatButton(
-                                            color: Color(0xFF8CA6DB),
-                                            onPressed: () async {
-                                              // print("_scanBarcode");
-                                              // print(_scanBarcode);
-
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(SnackBar(
-                                                content: Text(
-                                                  "Order Confirmed",
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    //fontWeight: FontWeight.bold,
-                                                    fontSize: 18,
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              ));
-
-                                              if (qtyCon.text.isEmpty) {
-                                                await postQuantity(
-                                                    1.toString());
-                                                await postScannedResult();
-                                              } else {
-                                                //post to api
-                                                postQuantity(qtyCon.text);
-                                                qtyCon.clear();
-                                              }
-                                              // var snackBar = SnackBar(
-                                              //     content: Text('Hello World'));
-                                              // ScaffoldMessenger.of(context)
-                                              //     .showSnackBar(snackBar);
-                                              //scanBarcodeNormal();
-                                              Navigator.pop(context);
-                                            },
-                                            child: Text("ADD"),
-                                          ),
-                                        ],
-                                        scrollable: true,
-                                      );
-                                    }
-                                  });
-                            });
-                          },
-                          child: Container(
-                            height: 120,
-                            width: 120,
+          ),
+          actions: [
+            GestureDetector(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()));
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: Icon(
+                    Icons.logout_sharp,
+                    size: 30,
+                    color: Colors.black54,
+                  ),
+                ))
+          ],
+        ),
+        body: Builder(builder: (BuildContext context) {
+          return Container(
+              alignment: Alignment.center,
+              child: Flex(
+                  direction: Axis.vertical,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    GestureDetector(
+                      onTap: () async {
+                        await scanBarcodeNormal();
+                        await autoScan();
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            height: 200,
+                            width: 150,
                             decoration: BoxDecoration(
+                              color: Color(0xffF7F7F7),
                               border: Border.all(
                                   width: 5, color: Colors.yellowAccent),
                               image: DecorationImage(
-                                  image:
-                                      AssetImage('image/barcode-icon-21.jpg')),
+                                  image: AssetImage('image/ScanAndAdd.jpg')),
+                            ),
+                            child: Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Text(
+                                "Scan and Add",
+                                style: GoogleFonts.urbanist(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w800,
+                                    color: Colors.black54),
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 30,
-                        ),
-                        GestureDetector(
-                          onTap: () async {
-                            await scanBarcodeNormal();
-                            await postScannedResult();
-                            Future.delayed(Duration(milliseconds: 20), () {
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    if (isLoading == true) {
-                                      return CircularProgressIndicator();
-                                    } else {
-                                      return AlertDialog(
-                                        title: Text('Scan result',
-                                            style: TextStyle(fontSize: 20)),
-                                        content: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                        ],
+                      ),
+                    ),
+
+                    SizedBox(
+                      height: 30,
+                    ),
+                    GestureDetector(
+                      onTap: () async {
+                        await scanBarcodeNormal();
+                        await postScannedResult();
+                        Future.delayed(Duration(milliseconds: 20), () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                if (isLoading == true) {
+                                  return CircularProgressIndicator();
+                                } else {
+                                  return AlertDialog(
+                                    title: Text(
+                                      'Scan result',
+                                      style: GoogleFonts.urbanist(
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.w800,
+                                          color: Colors.tealAccent),
+                                    ),
+                                    content: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Item Code:   ${data!.xitem}',
+                                          style: GoogleFonts.urbanist(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w800,
+                                              color: Colors.black54),
+                                        ),
+                                        Text(
+                                          "Item Name:  ${data!.xdesc}",
+                                          style: GoogleFonts.urbanist(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w800,
+                                              color: Colors.black54),
+                                        ),
+                                        Text(
+                                          "Supplier Name:  ${data!.xcusname}",
+                                          style: GoogleFonts.urbanist(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w800,
+                                              color: Colors.black54),
+                                        ),
+                                        Row(
                                           children: [
-                                            Text('Item Code:   ${data!.xitem}'),
-                                            Text("Item Name:  ${data!.xdesc} "),
                                             Text(
-                                                "Supplier Name:  ${data!.xcusname} "),
-                                            Row(
-                                              children: [
-                                                Text("Quantity : "),
-                                                SizedBox(
-                                                  height: 60,
-                                                  width: 50,
-                                                  child: TextField(
-                                                    controller: qtyCon,
-                                                    autofocus: true,
-                                                    textAlign: TextAlign.center,
-                                                    keyboardType:
-                                                        TextInputType.number,
-                                                    maxLength: 1,
-                                                    cursorColor:
-                                                        Theme.of(context)
-                                                            .primaryColorDark,
-                                                    decoration:
-                                                        const InputDecoration(
-                                                            // border:
-                                                            //     OutlineInputBorder(),
-                                                            counterText: ' ',
-                                                            hintText: "1",
-                                                            hintStyle: TextStyle(
-                                                                color: Colors
-                                                                    .black,
-                                                                fontSize: 20)),
-                                                    onChanged: (value) {
-                                                      //focus scope next and previous use for control the controller movement.
-                                                      if (value.length == 1) {
-                                                        FocusScope.of(context)
-                                                            .nextFocus();
-                                                      } else if (value
-                                                          .isEmpty) {
-                                                        FocusScope.of(context)
-                                                            .previousFocus();
-                                                      }
-                                                    },
-                                                  ),
-                                                ),
-                                              ],
+                                              "Quantity : ",
+                                              style: GoogleFonts.urbanist(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.w800,
+                                                  color: Colors.black54),
+                                            ),
+                                            SizedBox(
+                                              height: 60,
+                                              width: 50,
+                                              child: TextField(
+                                                controller: qtyCon,
+                                                autofocus: true,
+                                                textAlign: TextAlign.center,
+                                                keyboardType:
+                                                    TextInputType.number,
+                                                cursorColor: Theme.of(context)
+                                                    .primaryColorDark,
+                                                decoration: InputDecoration(
+                                                    // border:
+                                                    //     OutlineInputBorder(),
+                                                    counterText: ' ',
+                                                    hintText: "1",
+                                                    hintStyle:
+                                                        GoogleFonts.urbanist(
+                                                            color:
+                                                                Colors.black)),
+                                                onChanged: (value) {
+                                                  //focus scope next and previous use for control the controller movement.
+                                                  if (value.length == 1) {
+                                                    FocusScope.of(context)
+                                                        .nextFocus();
+                                                  } else if (value.isEmpty) {
+                                                    FocusScope.of(context)
+                                                        .previousFocus();
+                                                  }
+                                                },
+                                              ),
                                             ),
                                           ],
                                         ),
-                                        actions: [
-                                          FlatButton(
-                                            color: Color(0xFF8CA6DB),
-                                            onPressed: () async {
-                                              // print("_scanBarcode");
-                                              // print(_scanBarcode);
+                                      ],
+                                    ),
+                                    actions: [
+                                      FlatButton(
+                                        color: Color(0xFF8CA6DB),
+                                        onPressed: () async {
+                                          // print("_scanBarcode");
+                                          // print(_scanBarcode);
 
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(SnackBar(
-                                                content: Text(
-                                                  "Order Confirmed",
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    //fontWeight: FontWeight.bold,
-                                                    fontSize: 18,
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              ));
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(const SnackBar(
+                                            duration: Duration(seconds: 1),
+                                            content: Text(
+                                              "Order Added successfully",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                //fontWeight: FontWeight.bold,
+                                                fontSize: 18,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ));
 
-                                              if (qtyCon.text.isEmpty) {
-                                                await postQuantity(
-                                                    1.toString());
-                                                await postScannedResult();
-                                              } else {
-                                                //post to api
-                                                postQuantity(qtyCon.text);
-                                                qtyCon.clear();
-                                              }
-                                              // var snackBar = SnackBar(
-                                              //     content: Text('Hello World'));
-                                              // ScaffoldMessenger.of(context)
-                                              //     .showSnackBar(snackBar);
-                                              //scanBarcodeNormal();
-                                              Navigator.pop(context);
-                                            },
-                                            child: Text("ADD"),
-                                          ),
-                                        ],
-                                        scrollable: true,
-                                      );
-                                    }
-                                  });
-                            });
-                          },
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                height: 130,
-                                width: 130,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                      width: 5, color: Colors.yellowAccent),
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          'image/barcode-icon-21.jpg')),
-                                ),
+                                          if (qtyCon.text.isEmpty) {
+                                            await postQuantity(1.toString());
+                                            await postScannedResult();
+                                          } else {
+                                            //post to api
+                                            postQuantity(qtyCon.text);
+                                            qtyCon.clear();
+                                          }
+                                          // var snackBar = SnackBar(
+                                          //     content: Text('Hello World'));
+                                          // ScaffoldMessenger.of(context)
+                                          //     .showSnackBar(snackBar);
+                                          //scanBarcodeNormal();
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text("ADD"),
+                                      ),
+                                    ],
+                                    scrollable: true,
+                                  );
+                                }
+                              });
+                        });
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            height: 200,
+                            width: 150,
+                            decoration: BoxDecoration(
+                              color: Color(0xffF7F7F7),
+                              border: Border.all(
+                                  width: 5, color: Colors.yellowAccent),
+                              image: DecorationImage(
+                                  image: AssetImage('image/Scan.jpg')),
+                            ),
+                            child: Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Text(
+                                "Add manually",
+                                style: GoogleFonts.urbanist(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w800,
+                                    color: Colors.black54),
                               ),
-                              Text("data"),
-                            ],
+                            ),
                           ),
-                        ),
+                        ],
+                      ),
+                    ),
 
-                        // Container(
-                        //   child: Column(
-                        //     crossAxisAlignment: CrossAxisAlignment.start,
-                        //     children: [
-                        //       Text('Item Code:   ${data!.xitem}'),
-                        //       Text("Item Name:  ${data!.xdesc} "),
-                        //       Text("Supplier Name:  ${data!.xcusname} "),
-                        //       Row(
-                        //         children: [
-                        //           Text("Quantity : "),
-                        //           SizedBox(
-                        //             height: 60,
-                        //             width: 50,
-                        //             child: TextField(
-                        //               controller: qtyCon,
-                        //               autofocus: true,
-                        //               textAlign: TextAlign.center,
-                        //               keyboardType: TextInputType.number,
-                        //               maxLength: 1,
-                        //               cursorColor:
-                        //                   Theme.of(context).primaryColorDark,
-                        //               decoration: const InputDecoration(
-                        //                   // border:
-                        //                   //     OutlineInputBorder(),
-                        //                   counterText: ' ',
-                        //                   hintText: "1",
-                        //                   hintStyle: TextStyle(
-                        //                       color: Colors.black,
-                        //                       fontSize: 20)),
-                        //               onChanged: (value) {
-                        //                 //focus scope next and previous use for control the controller movement.
-                        //                 if (value.length == 1) {
-                        //                   FocusScope.of(context).nextFocus();
-                        //                 } else if (value.isEmpty) {
-                        //                   FocusScope.of(context)
-                        //                       .previousFocus();
-                        //                 }
-                        //               },
-                        //             ),
-                        //           ),
-                        //         ],
-                        //       ),
-                        //       FlatButton(
-                        //         color: Color(0xFF8CA6DB),
-                        //         onPressed: () async {
-                        //           print(_scanBarcode);
-                        //           if (qtyCon.text.isEmpty) {
-                        //             postQuantity(1.toString());
-                        //           } else {
-                        //             //post to api
-                        //             postQuantity(qtyCon.text);
-                        //             qtyCon.clear();
-                        //           }
-                        //           Navigator.pop(context);
-                        //         },
-                        //         child: Text("ADD"),
-                        //       ),
-                        //     ],
-                        //   ),
-                        // )
-                      ]));
-            })));
+                    // Container(
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: [
+                    //       Text('Item Code:   ${data!.xitem}'),
+                    //       Text("Item Name:  ${data!.xdesc} "),
+                    //       Text("Supplier Name:  ${data!.xcusname} "),
+                    //       Row(
+                    //         children: [
+                    //           Text("Quantity : "),
+                    //           SizedBox(
+                    //             height: 60,
+                    //             width: 50,
+                    //             child: TextField(
+                    //               controller: qtyCon,
+                    //               autofocus: true,
+                    //               textAlign: TextAlign.center,
+                    //               keyboardType: TextInputType.number,
+                    //               maxLength: 1,
+                    //               cursorColor:
+                    //                   Theme.of(context).primaryColorDark,
+                    //               decoration: const InputDecoration(
+                    //                   // border:
+                    //                   //     OutlineInputBorder(),
+                    //                   counterText: ' ',
+                    //                   hintText: "1",
+                    //                   hintStyle: TextStyle(
+                    //                       color: Colors.black,
+                    //                       fontSize: 20)),
+                    //               onChanged: (value) {
+                    //                 //focus scope next and previous use for control the controller movement.
+                    //                 if (value.length == 1) {
+                    //                   FocusScope.of(context).nextFocus();
+                    //                 } else if (value.isEmpty) {
+                    //                   FocusScope.of(context)
+                    //                       .previousFocus();
+                    //                 }
+                    //               },
+                    //             ),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //       FlatButton(
+                    //         color: Color(0xFF8CA6DB),
+                    //         onPressed: () async {
+                    //           print(_scanBarcode);
+                    //           if (qtyCon.text.isEmpty) {
+                    //             postQuantity(1.toString());
+                    //           } else {
+                    //             //post to api
+                    //             postQuantity(qtyCon.text);
+                    //             qtyCon.clear();
+                    //           }
+                    //           Navigator.pop(context);
+                    //         },
+                    //         child: Text("ADD"),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // )
+                  ]));
+        }));
   }
 }
