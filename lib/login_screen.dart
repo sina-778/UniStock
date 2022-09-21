@@ -1,3 +1,4 @@
+import 'package:google_fonts/google_fonts.dart';
 import 'package:uni_stock/scan_and_add.dart';
 
 import 'home_screen.dart';
@@ -25,16 +26,13 @@ class _LoginScreenState extends State<LoginScreen> {
             backgroundColor: Colors.amberAccent,
             centerTitle: true,
             automaticallyImplyLeading: false,
-            title: Padding(
-              padding: const EdgeInsets.only(top: 35),
-              child: Center(
-                child: Text(
-                  ' UniStock',
-                  style: TextStyle(
-                    color: Colors.black54,
-                    fontSize: 30,
-                    fontWeight: FontWeight.w700,
-                  ),
+            title: Center(
+              child: Text(
+                ' UniStock',
+                style: GoogleFonts.urbanist(
+                  color: Colors.black54,
+                  fontSize: 30,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
             ),

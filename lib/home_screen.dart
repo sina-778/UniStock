@@ -239,7 +239,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               border: Border.all(
                                   width: 5, color: Colors.yellowAccent),
                               image: DecorationImage(
-                                  image: AssetImage('image/scan.jpg')),
+                                  image:
+                                      AssetImage('image/barcode-icon-21.jpg')),
                             ),
                           ),
                         ),
@@ -370,7 +371,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           'image/barcode-icon-21.jpg')),
                                 ),
                               ),
-                              Text("Scan and ADD"),
+                              Text("data"),
                             ],
                           ),
                         ),
