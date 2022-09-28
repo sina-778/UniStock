@@ -1,7 +1,7 @@
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/material.dart';
 
 import 'home_screen.dart';
-import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -60,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 top: 30, left: 10, right: 10),
                             child: TextFormField(
                               controller: user,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 hintText: 'User name',
                                 hintStyle:
                                     TextStyle(color: Colors.grey, fontSize: 20),
@@ -70,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           Padding(
@@ -78,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 top: 20, left: 10, right: 10),
                             child: TextFormField(
                               // controller: passController,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 hintText: 'Password',
                                 hintStyle:
                                     TextStyle(color: Colors.grey, fontSize: 20),
@@ -91,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           Padding(
@@ -99,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 top: 30, left: 10, right: 10),
                             child: TextFormField(
                               controller: store,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 hintText: 'Store ID',
                                 hintStyle:
                                     TextStyle(color: Colors.grey, fontSize: 20),
@@ -109,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 40,
                           ),
                           SizedBox(
@@ -127,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               },
                               style: ElevatedButton.styleFrom(
                                   primary: Colors.amberAccent),
-                              child: Text(
+                              child: const Text(
                                 'LogIn',
                                 style: TextStyle(
                                     color: Colors.black54, fontSize: 20),
