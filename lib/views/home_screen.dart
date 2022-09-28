@@ -150,10 +150,11 @@ class _HomeScreenState extends State<HomeScreen> {
             actions: [
               GestureDetector(
                   onTap: () {
-                    Navigator.push(
+                    Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const LoginScreen()));
+                            builder: (BuildContext context) => LoginScreen()),
+                        (Route<dynamic> route) => false);
                   },
                   child: const Padding(
                     padding: EdgeInsets.only(right: 10),
@@ -182,7 +183,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           await autoScan();
                         },
                         child: Card(
-                          elevation: 5,
+                          elevation: 2,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20)),
                           child: Container(
@@ -344,7 +345,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           });
                         },
                         child: Card(
-                          elevation: 5,
+                          elevation: 2,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20)),
                           child: Container(
@@ -394,8 +395,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.0)),
                             color: Colors.white,
-                            elevation: 8,
-                            shadowColor: Colors.blue,
+                            elevation: 2,
+                            shadowColor: Colors.blueGrey,
                             child: Row(
                               children: [
                                 Expanded(
@@ -424,6 +425,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
                                         Text(
                                           "Supplier Name : Sajeeb Corporation",
+                                          overflow: TextOverflow.ellipsis,
                                           style: GoogleFonts.urbanist(
                                             color: Colors.black,
                                             fontWeight: FontWeight.w400,
