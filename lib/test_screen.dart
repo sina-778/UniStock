@@ -1,14 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class testLoginScreen extends StatefulWidget {
-  const testLoginScreen({Key? key}) : super(key: key);
+class TestLoginScreen extends StatefulWidget {
+  const TestLoginScreen({Key? key}) : super(key: key);
 
   @override
-  State<testLoginScreen> createState() => _testLoginScreenState();
+  State<TestLoginScreen> createState() => _TestLoginScreenState();
 }
 
-class _testLoginScreenState extends State<testLoginScreen> {
+class _TestLoginScreenState extends State<TestLoginScreen> {
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController storeId = TextEditingController();
