@@ -1,6 +1,5 @@
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
-
 import 'home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -20,35 +19,73 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(100),
-          child: AppBar(
-            backgroundColor: Colors.amberAccent,
-            centerTitle: true,
-            automaticallyImplyLeading: false,
-            title: Center(
-              child: Text(
-                ' UniStock',
-                style: GoogleFonts.urbanist(
-                  color: Colors.black54,
-                  fontSize: 30,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
-          ),
-        ),
+        // appBar: PreferredSize(
+        //   preferredSize: Size.fromHeight(60),
+        //   child: AppBar(
+        //     backgroundColor: Colors.white,
+        //     elevation: 0,
+        //     centerTitle: true,
+        //     automaticallyImplyLeading: false,
+        //     title: Row(
+        //       mainAxisAlignment: MainAxisAlignment.center,
+        //       children: [
+        //         Text(
+        //           "Uni",
+        //           style: GoogleFonts.urbanist(
+        //               fontSize: 30,
+        //               fontWeight: FontWeight.w800,
+        //               color: Colors.black),
+        //         ),
+        //         Image.asset(
+        //           'image/s.png',
+        //           width: 30,
+        //         ),
+        //         Text(
+        //           "tock",
+        //           style: GoogleFonts.urbanist(
+        //               fontSize: 30,
+        //               fontWeight: FontWeight.w800,
+        //               color: Colors.black),
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        // ),
         body: SingleChildScrollView(
           child: Container(
+            padding: EdgeInsets.only(top: 75),
             child: Column(
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Uni",
+                      style: GoogleFonts.urbanist(
+                          fontSize: 40,
+                          fontWeight: FontWeight.w800,
+                          color: Colors.black),
+                    ),
+                    Image.asset(
+                      'image/s.png',
+                      width: 40,
+                    ),
+                    Text(
+                      "tock",
+                      style: GoogleFonts.urbanist(
+                          fontSize: 40,
+                          fontWeight: FontWeight.w800,
+                          color: Colors.black),
+                    ),
+                  ],
+                ),
                 Padding(
                   padding: const EdgeInsets.only(left: 10, top: 80, right: 10),
                   child: Container(
                     width: 400,
                     height: 380,
                     decoration: BoxDecoration(
-                      color: Colors.blueGrey,
+                      color: Colors.white12,
                       borderRadius: BorderRadius.circular(20.0),
                     ),
                     child: Form(
