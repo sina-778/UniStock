@@ -129,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Text(
                 'UniStock',
                 style: GoogleFonts.urbanist(
-                  color: Colors.black54,
+                  color: Colors.black,
                   fontSize: 30,
                   fontWeight: FontWeight.w700,
                 ),
@@ -357,7 +357,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Text(
                 "List of Products added",
                 style: GoogleFonts.urbanist(
-                  color: Colors.black54,
+                  color: Colors.black,
                   fontSize: 25,
                   fontWeight: FontWeight.w700,
                 ),
@@ -372,15 +372,22 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemBuilder: (context, index) {
                       return Container(
                         height: 150,
-                        padding: EdgeInsets.only(top: 5, bottom: 5),
+                        padding: EdgeInsets.only(
+                            top: 5, bottom: 5, left: 5, right: 5),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
                         child: Card(
-                          color: Colors.white54,
-                          elevation: 5,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0)),
+                          color: Colors.white,
+                          elevation: 8,
+                          shadowColor: Colors.blue,
                           child: Row(
                             children: [
                               Expanded(
                                 child: Container(
-                                  padding: EdgeInsets.only(left: 5),
+                                  padding: EdgeInsets.only(left: 10, top: 5),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -391,7 +398,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         "Item Code : 010497",
                                         style: GoogleFonts.urbanist(
                                           color: Colors.black,
-                                          fontWeight: FontWeight.w400,
+                                          fontWeight: FontWeight.w800,
                                         ),
                                       ),
                                       Text(
@@ -429,7 +436,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               Container(
                                 width: 120,
-                                padding: EdgeInsets.only(top: 5),
+                                padding: EdgeInsets.only(
+                                    top: 10, right: 5, bottom: 5),
                                 child: Column(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -442,200 +450,201 @@ class _HomeScreenState extends State<HomeScreen> {
                                           "Date : 30-Aug-2022",
                                           style: GoogleFonts.urbanist(
                                             color: Colors.black,
-                                            fontWeight: FontWeight.w400,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w600,
                                           ),
                                         ),
                                         Text(
                                           "Time: 19:00:55:32",
                                           style: GoogleFonts.urbanist(
                                             color: Colors.black,
-                                            fontWeight: FontWeight.w400,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w600,
                                           ),
                                         ),
                                       ],
                                     ),
-                                    Align(
-                                      alignment: Alignment.bottomCenter,
-                                      child: ElevatedButton(
-                                        onPressed: () {
-                                          showDialog(
-                                              context: context,
-                                              builder: (context) {
-                                                return AlertDialog(
-                                                  title: Text(
-                                                    'Edit quantity',
-                                                    style: GoogleFonts.urbanist(
-                                                        fontSize: 30,
-                                                        fontWeight:
-                                                            FontWeight.w800,
-                                                        color: Colors.black54),
-                                                  ),
-                                                  content: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        'Item Code:   010497',
-                                                        style: GoogleFonts
-                                                            .urbanist(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w800,
-                                                                color: Colors
-                                                                    .black54),
-                                                      ),
-                                                      Text(
-                                                        "Item Name : Tang powder Drink orange Jar 750gm",
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        style: GoogleFonts
-                                                            .urbanist(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w800,
-                                                                color: Colors
-                                                                    .black54),
-                                                      ),
-                                                      Text(
-                                                        "Supplier Name:  Sajeeb Corporation",
-                                                        style: GoogleFonts
-                                                            .urbanist(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w800,
-                                                                color: Colors
-                                                                    .black54),
-                                                      ),
-                                                      Text(
-                                                        "Total Quantity:  10100",
-                                                        style: GoogleFonts
-                                                            .urbanist(
-                                                                fontSize: 15,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w800,
-                                                                color: Colors
-                                                                    .black54),
-                                                      ),
-                                                      Row(
-                                                        children: [
-                                                          Text(
-                                                            "Last added quantity : ",
-                                                            style: GoogleFonts
-                                                                .urbanist(
-                                                                    fontSize:
-                                                                        15,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w800,
-                                                                    color: Colors
-                                                                        .black54),
-                                                          ),
-                                                          SizedBox(
-                                                            height: 60,
-                                                            width: 50,
-                                                            child: TextField(
-                                                              controller:
-                                                                  qtyCon,
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                              keyboardType:
-                                                                  TextInputType
-                                                                      .number,
-                                                              cursorColor: Theme
-                                                                      .of(context)
-                                                                  .primaryColorDark,
-                                                              decoration:
-                                                                  InputDecoration(
-                                                                // border:
-                                                                //     OutlineInputBorder(),
-                                                                counterText:
-                                                                    ' ',
-                                                                hintText: "5",
-                                                                hintStyle: GoogleFonts
-                                                                    .urbanist(
-                                                                        color: Colors
-                                                                            .black),
-                                                              ),
-                                                              // onChanged:
-                                                              //     (value) {
-                                                              //   //focus scope next and previous use for control the controller movement.
-                                                              //   if (value
-                                                              //           .length ==
-                                                              //       1) {
-                                                              //     FocusScope.of(
-                                                              //             context)
-                                                              //         .nextFocus();
-                                                              //   } else if (value
-                                                              //       .isEmpty) {
-                                                              //     FocusScope.of(
-                                                              //             context)
-                                                              //         .previousFocus();
-                                                              //   }
-                                                              // },
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  actions: [
-                                                    FlatButton(
-                                                      color: Colors.amberAccent,
-                                                      onPressed: () async {
-                                                        qtyCon.clear();
-                                                        ScaffoldMessenger.of(
-                                                                context)
-                                                            .showSnackBar(
-                                                                SnackBar(
-                                                          duration: Duration(
-                                                              seconds: 1),
-                                                          content: Text(
-                                                            "Product updated successfully",
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style: GoogleFonts
-                                                                .urbanist(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 18,
+                                    GestureDetector(
+                                      onTap: () {
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return AlertDialog(
+                                                title: Text(
+                                                  'Edit quantity',
+                                                  style: GoogleFonts.urbanist(
+                                                      fontSize: 30,
+                                                      fontWeight:
+                                                          FontWeight.w800,
+                                                      color: Colors.black54),
+                                                ),
+                                                content: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      'Item Code:   010497',
+                                                      style:
+                                                          GoogleFonts.urbanist(
+                                                              fontSize: 15,
                                                               fontWeight:
                                                                   FontWeight
-                                                                      .w400,
-                                                            ),
-                                                          ),
-                                                        ));
-                                                        Navigator.pop(context);
-                                                      },
-                                                      child: Text(
-                                                        "Update",
-                                                        style: GoogleFonts
-                                                            .urbanist(
-                                                          color: Colors.black54,
-                                                          fontWeight:
-                                                              FontWeight.w700,
+                                                                      .w800,
+                                                              color: Colors
+                                                                  .black54),
+                                                    ),
+                                                    Text(
+                                                      "Item Name : Tang powder Drink orange Jar 750gm",
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style:
+                                                          GoogleFonts.urbanist(
+                                                              fontSize: 15,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w800,
+                                                              color: Colors
+                                                                  .black54),
+                                                    ),
+                                                    Text(
+                                                      "Supplier Name:  Sajeeb Corporation",
+                                                      style:
+                                                          GoogleFonts.urbanist(
+                                                              fontSize: 15,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w800,
+                                                              color: Colors
+                                                                  .black54),
+                                                    ),
+                                                    Text(
+                                                      "Total Quantity:  10100",
+                                                      style:
+                                                          GoogleFonts.urbanist(
+                                                              fontSize: 15,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w800,
+                                                              color: Colors
+                                                                  .black54),
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        Text(
+                                                          "Last added quantity : ",
+                                                          style: GoogleFonts
+                                                              .urbanist(
+                                                                  fontSize: 15,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w800,
+                                                                  color: Colors
+                                                                      .black54),
                                                         ),
-                                                      ),
+                                                        SizedBox(
+                                                          height: 60,
+                                                          width: 50,
+                                                          child: TextField(
+                                                            controller: qtyCon,
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            keyboardType:
+                                                                TextInputType
+                                                                    .number,
+                                                            cursorColor: Theme
+                                                                    .of(context)
+                                                                .primaryColorDark,
+                                                            decoration:
+                                                                InputDecoration(
+                                                              // border:
+                                                              //     OutlineInputBorder(),
+                                                              counterText: ' ',
+                                                              hintText: "5",
+                                                              hintStyle: GoogleFonts
+                                                                  .urbanist(
+                                                                      color: Colors
+                                                                          .black),
+                                                            ),
+                                                            // onChanged:
+                                                            //     (value) {
+                                                            //   //focus scope next and previous use for control the controller movement.
+                                                            //   if (value
+                                                            //           .length ==
+                                                            //       1) {
+                                                            //     FocusScope.of(
+                                                            //             context)
+                                                            //         .nextFocus();
+                                                            //   } else if (value
+                                                            //       .isEmpty) {
+                                                            //     FocusScope.of(
+                                                            //             context)
+                                                            //         .previousFocus();
+                                                            //   }
+                                                            // },
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
                                                   ],
-                                                  scrollable: true,
-                                                );
-                                              });
-                                        },
+                                                ),
+                                                actions: [
+                                                  FlatButton(
+                                                    color: Colors.amberAccent,
+                                                    onPressed: () async {
+                                                      qtyCon.clear();
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                              SnackBar(
+                                                        duration: Duration(
+                                                            seconds: 1),
+                                                        content: Text(
+                                                          "Product updated successfully",
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style: GoogleFonts
+                                                              .urbanist(
+                                                            color: Colors.white,
+                                                            fontSize: 18,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                          ),
+                                                        ),
+                                                      ));
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: Text(
+                                                      "Update",
+                                                      style:
+                                                          GoogleFonts.urbanist(
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                                scrollable: true,
+                                              );
+                                            });
+                                      },
+                                      child: Container(
+                                        height: 35,
+                                        width: 100,
+                                        decoration: BoxDecoration(
+                                            color: Colors.amberAccent,
+                                            borderRadius:
+                                                BorderRadius.circular(10.0)),
                                         child: Center(
-                                            child: Text(
-                                          "Edit",
-                                          style: GoogleFonts.urbanist(
-                                            color: Colors.black,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w600,
+                                          child: Text(
+                                            "Edit",
+                                            style: GoogleFonts.urbanist(
+                                              color: Colors.black,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w600,
+                                            ),
                                           ),
-                                        )),
+                                        ),
                                       ),
                                     )
                                   ],
