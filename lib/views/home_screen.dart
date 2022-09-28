@@ -171,7 +171,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         await autoScan();
                       },
                       child: Card(
-                        elevation: 5,
+                        elevation: 2,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20)),
                         child: Container(
@@ -332,7 +332,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         });
                       },
                       child: Card(
-                        elevation: 5,
+                        elevation: 2,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20)),
                         child: Container(
@@ -381,8 +381,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0)),
                           color: Colors.white,
-                          elevation: 8,
-                          shadowColor: Colors.blue,
+                          elevation: 2,
+                          shadowColor: Colors.blueGrey,
                           child: Row(
                             children: [
                               Expanded(
@@ -405,28 +405,32 @@ class _HomeScreenState extends State<HomeScreen> {
                                         "Item Name : Tang powder Drink orange Jar 750gm",
                                         overflow: TextOverflow.ellipsis,
                                         style: GoogleFonts.urbanist(
-                                          color: Colors.black,
+                                          color: Colors.black54,
+                                          fontSize: 13,
                                           fontWeight: FontWeight.w400,
                                         ),
                                       ),
                                       Text(
                                         "Supplier Name : Sajeeb Corporation",
                                         style: GoogleFonts.urbanist(
-                                          color: Colors.black,
+                                          color: Colors.black54,
+                                          fontSize: 13,
                                           fontWeight: FontWeight.w400,
                                         ),
                                       ),
                                       Text(
                                         "Total Quantity : 10000",
                                         style: GoogleFonts.urbanist(
-                                          color: Colors.black,
+                                          color: Colors.black54,
+                                          fontSize: 13,
                                           fontWeight: FontWeight.w400,
                                         ),
                                       ),
                                       Text(
                                         "Last Added Quantity : 5",
                                         style: GoogleFonts.urbanist(
-                                          color: Colors.black,
+                                          color: Colors.black54,
+                                          fontSize: 13,
                                           fontWeight: FontWeight.w400,
                                         ),
                                       ),
