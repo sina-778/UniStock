@@ -428,7 +428,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                               Container(
-                                width: 110,
+                                width: 120,
                                 padding: EdgeInsets.only(top: 5),
                                 child: Column(
                                   mainAxisAlignment:
@@ -442,15 +442,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                           "Date : 30-Aug-2022",
                                           style: GoogleFonts.urbanist(
                                             color: Colors.black,
-                                            fontSize: 12,
                                             fontWeight: FontWeight.w400,
                                           ),
                                         ),
                                         Text(
-                                          "Time: 11:00:55:32",
+                                          "Time: 19:00:55:32",
                                           style: GoogleFonts.urbanist(
                                             color: Colors.black,
-                                            fontSize: 12,
                                             fontWeight: FontWeight.w400,
                                           ),
                                         ),
@@ -629,8 +627,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 );
                                               });
                                         },
-                                        style: ElevatedButton.styleFrom(
-                                            primary: Colors.amberAccent),
                                         child: Center(
                                             child: Text(
                                           "Edit",
