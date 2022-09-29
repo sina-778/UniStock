@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import '../Model/ItemInfo.dart';
 import 'login_screen.dart';
-
+import 'package:cupertino_icons/cupertino_icons.dart';
 class HomeScreen extends StatefulWidget {
   String user;
   String store;
@@ -300,8 +300,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ],
                                       ),
                                       actions: [
-                                        FlatButton(
-                                          color: Color(0xFF8CA6DB),
+                                        TextButton(
+                                          style:TextButton.styleFrom(
+                                            backgroundColor:  Color(0xFF8CA6DB),
+                                          ),
+
                                           onPressed: () async {
                                             // print("_scanBarcode");
                                             // print(_scanBarcode);
@@ -608,8 +611,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     ],
                                                   ),
                                                   actions: [
-                                                    FlatButton(
-                                                      color: Colors.amberAccent,
+                                                    TextButton(
+                                                      style:TextButton.styleFrom(
+                                                        backgroundColor:  Colors.amberAccent,
+                                                      ),
                                                       onPressed: () async {
                                                         qtyCon.clear();
                                                         ScaffoldMessenger.of(
