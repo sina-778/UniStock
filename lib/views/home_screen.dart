@@ -88,6 +88,16 @@ class _HomeScreenState extends State<HomeScreen> {
     print(response.body);
   }
 
+
+  Future<void> updateQty(String amt, String item) async {
+    var response = await http.post(
+        Uri.parse("http://172.20.20.69/sina/unistock/update_item.php"),
+        body: jsonEncode(<String,  dynamic>{
+          "item": item,
+          "qty": amt
+        }));
+  }
+
   //API for ProductList
   bool haveProduct=false;
   List<ProductList> products=[];
@@ -328,7 +338,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       actions: [
                                         TextButton(
                                           style:TextButton.styleFrom(
-                                            backgroundColor:  Color(0xFF8CA6DB),
+                                            backgroundColor:  Colors.amberAccent,
                                           ),
 
                                           onPressed: () async {
@@ -365,7 +375,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                             Navigator.pop(context);
                                             await productList();
                                           },
-                                          child: Text("ADD"),
+                                          child: Text("ADD",style: TextStyle(
+                                            color: Colors.black
+                                          ),),
                                         ),
                                       ],
                                       scrollable: true,
@@ -539,7 +551,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                            .start,
                                                        children: [
                                                          Text(
-                                                           'Item Code:   010497',
+                                                           'Item Code:    ${products![index].xitem}',
                                                            style: GoogleFonts
                                                                .urbanist(
                                                                fontSize: 15,
@@ -550,7 +562,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                    .black54),
                                                          ),
                                                          Text(
-                                                           "Item Name : Tang powder Drink orange Jar 750gm",
+                                                           "Item Name :  ${products![index].itemname}",
                                                            overflow: TextOverflow
                                                                .ellipsis,
                                                            style: GoogleFonts
@@ -563,7 +575,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                    .black54),
                                                          ),
                                                          Text(
-                                                           "Supplier Name:  Sajeeb Corporation",
+                                                           "Supplier Name:   ${products![index].supname}",
                                                            style: GoogleFonts
                                                                .urbanist(
                                                                fontSize: 15,
@@ -574,7 +586,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                    .black54),
                                                          ),
                                                          Text(
-                                                           "Total Quantity:  10100",
+                                                           "Total Quantity:   ${products![index].xcount}",
                                                            style: GoogleFonts
                                                                .urbanist(
                                                                fontSize: 15,
@@ -619,7 +631,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                    //     OutlineInputBorder(),
                                                                    counterText:
                                                                    ' ',
-                                                                   hintText: "5",
+                                                                   hintText: " ${products![index].lastqty}",
                                                                    hintStyle: GoogleFonts
                                                                        .urbanist(
                                                                        color: Colors
@@ -652,30 +664,59 @@ class _HomeScreenState extends State<HomeScreen> {
                                                          style:TextButton.styleFrom(
                                                            backgroundColor:  Colors.amberAccent,
                                                          ),
+                                                         // onPressed: () async {
+                                                         //   qtyCon.clear();
+                                                         //   ScaffoldMessenger.of(
+                                                         //       context)
+                                                         //       .showSnackBar(
+                                                         //       SnackBar(
+                                                         //         duration: Duration(
+                                                         //             seconds: 1),
+                                                         //         content: Text(
+                                                         //           "Product updated successfully",
+                                                         //           textAlign: TextAlign
+                                                         //               .center,
+                                                         //           style: GoogleFonts
+                                                         //               .urbanist(
+                                                         //             color:
+                                                         //             Colors.white,
+                                                         //             fontSize: 18,
+                                                         //             fontWeight:
+                                                         //             FontWeight
+                                                         //                 .w400,
+                                                         //           ),
+                                                         //         ),
+                                                         //       ));
+                                                         //   Navigator.pop(context);
+                                                         // },
                                                          onPressed: () async {
-                                                           qtyCon.clear();
-                                                           ScaffoldMessenger.of(
-                                                               context)
-                                                               .showSnackBar(
-                                                               SnackBar(
-                                                                 duration: Duration(
-                                                                     seconds: 1),
-                                                                 content: Text(
-                                                                   "Product updated successfully",
-                                                                   textAlign: TextAlign
-                                                                       .center,
-                                                                   style: GoogleFonts
-                                                                       .urbanist(
-                                                                     color:
-                                                                     Colors.white,
-                                                                     fontSize: 18,
-                                                                     fontWeight:
-                                                                     FontWeight
-                                                                         .w400,
-                                                                   ),
-                                                                 ),
-                                                               ));
+                                                           // print("_scanBarcode");
+                                                           // print(_scanBarcode);
+
+                                                           ScaffoldMessenger.of(context)
+                                                               .showSnackBar(const SnackBar(
+                                                             duration: Duration(seconds: 1),
+                                                             content: Text(
+                                                               "Product updated successfully",
+                                                               textAlign: TextAlign.center,
+                                                               style: TextStyle(
+                                                                 //fontWeight: FontWeight.bold,
+                                                                 fontSize: 18,
+                                                                 color: Colors.white,
+                                                               ),
+                                                             ),
+                                                           ));
+                                                             //post to api
+                                                           updateQty(qtyCon.text,'${products![index].xitem}');
+                                                             qtyCon.clear();
+
+                                                           // var snackBar = SnackBar(
+                                                           //     content: Text('Hello World'));
+                                                           // ScaffoldMessenger.of(context)
+                                                           //     .showSnackBar(snackBar);
+                                                           //scanBarcodeNormal();
                                                            Navigator.pop(context);
+                                                           await productList();
                                                          },
                                                          child: Text(
                                                            "Update",
