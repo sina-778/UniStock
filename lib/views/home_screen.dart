@@ -364,7 +364,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                               await postScannedResult();
                                             } else {
                                               //post to api
-                                              postQuantity(qtyCon.text);
+                                              await postQuantity(qtyCon.text);
+                                              await productList();
                                               qtyCon.clear();
                                             }
                                             // var snackBar = SnackBar(
@@ -373,7 +374,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                             //     .showSnackBar(snackBar);
                                             //scanBarcodeNormal();
                                             Navigator.pop(context);
-                                            await productList();
                                           },
                                           child: Text("ADD",style: TextStyle(
                                             color: Colors.black
@@ -707,16 +707,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                                              ),
                                                            ));
                                                              //post to api
-                                                           updateQty(qtyCon.text,'${products![index].xitem}');
-                                                             qtyCon.clear();
+                                                           await updateQty(qtyCon.text,'${products![index].xitem}');
+                                                           await productList();
+                                                           qtyCon.clear();
+                                                           Navigator.pop(context);
 
                                                            // var snackBar = SnackBar(
                                                            //     content: Text('Hello World'));
                                                            // ScaffoldMessenger.of(context)
                                                            //     .showSnackBar(snackBar);
                                                            //scanBarcodeNormal();
-                                                           Navigator.pop(context);
-                                                           await productList();
                                                          },
                                                          child: Text(
                                                            "Update",
