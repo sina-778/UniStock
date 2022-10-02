@@ -15,6 +15,14 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController pass = TextEditingController();
   TextEditingController store = TextEditingController();
 
+  bool ob_value=true;
+
+  void toggle(){
+    setState(() {
+      ob_value=!ob_value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -115,17 +123,27 @@ class _LoginScreenState extends State<LoginScreen> {
                                 top: 20, left: 10, right: 10),
                             child: TextFormField(
                               // controller: passController,
-                              decoration: const InputDecoration(
+                              decoration: InputDecoration(
                                 hintText: 'Password',
                                 hintStyle:
                                     TextStyle(color: Colors.grey, fontSize: 20),
                                 prefixIcon: Icon(
                                   Icons.vpn_key_outlined,
                                 ),
-                                suffixIcon: Icon(
-                                  Icons.remove_red_eye_outlined,
+
+                                suffixIcon: IconButton(
+                                  icon:  Icon(
+                                    //Changing icon by checking the value of ternary operation
+                                      ob_value?Icons.remove_red_eye_outlined:Icons.visibility_off_outlined
+                                  ),
+                                  onPressed: () {
+                                    toggle();
+                                  },
+
                                 ),
+
                               ),
+                              obscureText: ob_value,
                             ),
                           ),
                           const SizedBox(
